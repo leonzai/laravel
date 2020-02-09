@@ -19,17 +19,17 @@ php artisan make:model AbCd       // 默认对应的表是 ab_cds
 
 ```php
 \App\User::all();                          // 返回包含所有对象的集合
-\App\User::where('name', 'John')->first(); // 返回对象
-\App\User::where('id', 1)->value('name');   // 返回值，例如 'leon'
+\App\User::where(&#039;name&#039;, &#039;John&#039;)-&gt;first(); // 返回对象
+\App\User::where(&#039;id&#039;, 1)-&gt;value(&#039;name&#039;);   // 返回值，例如 &#039;leon&#039;
 \App\User::find(3);                        // 返回主键等于 3 的对象
 \App\User::find([1, 2]);                   // 返回主键等于 1 和 2 的对象的集合
-\App\User::pluck('age');                   // 返回包含字段值的集合
-\App\User::pluck('age', 'id');             // 返回关联集合 id => age，pluck 最多 2 个参数
+\App\User::pluck(&#039;age&#039;);                   // 返回包含字段值的集合
+\App\User::pluck(&#039;age&#039;, &#039;id&#039;);             // 返回关联集合 id =&gt; age，pluck 最多 2 个参数
 \App\User::count();                        // 返回记录总数
-\App\User::max('id');                      // 返回数字，库没有任何记录返回 null
-\App\User::min('id');                      // 返回数字，库没有任何记录返回 null
-\App\User::avg('age');                     // 返回数字，库没有任何记录返回 null，同名 averge
-\App\User::sum('salary');                  // 返回数字，库没有任何记录返回 0
+\App\User::max(&#039;id&#039;);                      // 返回数字，库没有任何记录返回 null
+\App\User::min(&#039;id&#039;);                      // 返回数字，库没有任何记录返回 null
+\App\User::avg(&#039;age&#039;);                     // 返回数字，库没有任何记录返回 null，同名 averge
+\App\User::sum(&#039;salary&#039;);                  // 返回数字，库没有任何记录返回 0
 ```
 
 ###### **where**
@@ -268,12 +268,12 @@ $flight->number; // "FR 900"
 `cursor` 允许你使用游标来遍历数据库数据，一次只执行单个查询。在处理大数据量请求时 `cursor` 方法可以大幅度减少内存的使用：
 
 ```php
-foreach (Flight::where('foo', 'bar')->cursor() as $flight) {
+foreach (Flight::where(&#039;foo&#039;, &#039;bar&#039;)-&gt;cursor() as $flight) {
     //
 }
 
-$users = App\User::cursor()->filter(function ($user) {
-    return $user->id > 500;
+$users = App\User::cursor()-&gt;filter(function ($user) {
+    return $user-&gt;id &gt; 500;
 });
 ```
 
@@ -296,14 +296,14 @@ Destination::addSelect(['last_flight' => Flight::select('name')
 ```php
 $model = App\Flight::findOrFail(1);
 
-$model = App\Flight::where('legs', '>', 100)->firstOrFail();
+$model = App\Flight::where(&#039;legs&#039;, &#039;&gt;&#039;, 100)-&gt;firstOrFail();
 ```
 
 ###### **全局作用域**
 
 ```php
 // 可以自由在  app 文件夹下创建 Scopes 文件夹来存放
-<?php
+&lt;?php
 namespace App\Scopes;
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
@@ -312,12 +312,12 @@ use Illuminate\Database\Eloquent\Builder;
 class AgeScope implements Scope {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('age', '>', 200);
+        $builder-&gt;where(&#039;age&#039;, &#039;&gt;&#039;, 200);
     }   // 使用 addSelect 而不是 select,可以避免覆盖
 }
 
 // 需要重写给定模型的 boot 方法并使用 addGlobalScope 方法
-<?php
+&lt;?php
 namespace App;
 use App\Scopes\AgeScope;
 use Illuminate\Database\Eloquent\Model;

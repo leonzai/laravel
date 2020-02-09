@@ -21,16 +21,16 @@
 	修改完记得重启 wampserver。
 
 ```conf
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
   ServerName qianjinyike.com
   ServerAlias qianjinyike.com
-  DocumentRoot "C:\Users\leonz\blog\public"
-  <Directory "C:\Users\leonz\blog">
+  DocumentRoot &quot;C:\Users\leonz\blog\public&quot;
+  &lt;Directory &quot;C:\Users\leonz\blog&quot;&gt;
     Options +Indexes +Includes +FollowSymLinks +MultiViews
     AllowOverride All
     Require local
-  </Directory>
-</VirtualHost>
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
 ```
 
 7. **安装 notepad++**

@@ -8,16 +8,16 @@
 
 ```php
 // 两种目的地址：闭包和控制器
-Route::get('foo', function () {
-    return 'Hello World';
+Route::get(&#039;foo&#039;, function () {
+    return &#039;Hello World&#039;;
 });
 
-Route::get('/user', 'UserController@index');
+Route::get(&#039;/user&#039;, &#039;UserController@index&#039;);
 
 
 
 // 带参数的源地址和目的地址
-Route::get('posts/{post}', function ($postId) {
+Route::get(&#039;posts/{post}&#039;, function ($postId) {
     //
 });
 ```
@@ -25,22 +25,22 @@ Route::get('posts/{post}', function ($postId) {
 #### **参数**
 
 ```php
-Route::get('posts/{post}/comments/{comment}', function ($pid, $cid) {
+Route::get(&#039;posts/{post}/comments/{comment}&#039;, function ($pid, $cid) {
     //
 });
 
-Route::get('user/{name?}', function ($name = 'John') {   // 一定要给可选参数设置默认值
+Route::get(&#039;user/{name?}&#039;, function ($name = &#039;John&#039;) {   // 一定要给可选参数设置默认值
     return $name;
 });
 
 # 对参数局部约束
-Route::get('user/{id}', function ($id) {
+Route::get(&#039;user/{id}&#039;, function ($id) {
     //
-})->where('id', '[0-9]+');
+})-&gt;where(&#039;id&#039;, &#039;[0-9]+&#039;);
 
-Route::get('user/{id}/{name}', function ($id, $name) {
+Route::get(&#039;user/{id}/{name}&#039;, function ($id, $name) {
     //
-})->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
+})-&gt;where([&#039;id&#039; =&gt; &#039;[0-9]+&#039;, &#039;name&#039; =&gt; &#039;[a-z]+&#039;]);
 
 
 
@@ -48,12 +48,12 @@ Route::get('user/{id}/{name}', function ($id, $name) {
 // RouteServiceProvider
 public function boot()
 {
-    Route::pattern('id', '[0-9]+');
+    Route::pattern(&#039;id&#039;, &#039;[0-9]+&#039;);
 
     parent::boot();
 }
 
-Route::get('user/{id}', function ($id) {
+Route::get(&#039;user/{id}&#039;, function ($id) {
     // id 各位都是整数才能执行这儿
 });
 ```
@@ -271,7 +271,7 @@ Route::name('admin.')->group(function () {
 
 ###### **添加中间件**
 
-[跳转到：Laravel 中间件](http://qianjinyike.com/laravel-中间件/ "跳转到：Laravel 中间件")
+[跳转到：Laravel 中间件](http://qianjinyike.com/laravel-中间件/ &quot;跳转到：Laravel 中间件&quot;)
 
 ```php
 Route::middleware('throttle:60,1')->group(function () {

@@ -26,16 +26,16 @@
 
 基础绑定
 ```php
-$this->app->bind('HelpSpot\API', function ($app) {
-    return new HelpSpot\API($app->make('HttpClient'));
+$this-&gt;app-&gt;bind(&#039;HelpSpot\API&#039;, function ($app) {
+    return new HelpSpot\API($app-&gt;make(&#039;HttpClient&#039;));
 });
 ```
 
 绑定单例
 
 ```php
-$this->app->singleton('HelpSpot\API', function ($app) {
-    return new HelpSpot\API($app->make('HttpClient'));
+$this-&gt;app-&gt;singleton(&#039;HelpSpot\API&#039;, function ($app) {
+    return new HelpSpot\API($app-&gt;make(&#039;HttpClient&#039;));
 });
 ```
 
@@ -44,15 +44,15 @@ $this->app->singleton('HelpSpot\API', function ($app) {
 ```php
 $api = new HelpSpot\API(new HttpClient);
 
-$this->app->instance('HelpSpot\API', $api);
+$this-&gt;app-&gt;instance(&#039;HelpSpot\API&#039;, $api);
 ```
 
 绑定实例时给定初始化数据
 
 ```php
-$this->app->when('App\Http\Controllers\UserController')
-          ->needs('$variableName')
-          ->give($value);    // 利用上下文给绑定设置初始数据
+$this-&gt;app-&gt;when(&#039;App\Http\Controllers\UserController&#039;)
+          -&gt;needs(&#039;$variableName&#039;)
+          -&gt;give($value);    // 利用上下文给绑定设置初始数据
 ```
 
 举个栗子
@@ -68,66 +68,66 @@ class Apple implements Fruit
     public $color;
 
     public function __construct($color){
-        $this->color = $color;
+        $this-&gt;color = $color;
     }
 
     public function color(){
-        return $this->color;
+        return $this-&gt;color;
     }
 }
 
-app()->bind('Fruit', 'Apple');
-app()->when('Apple')->needs('$color')->give('red');
-echo app('Fruit')->color();
+app()-&gt;bind(&#039;Fruit&#039;, &#039;Apple&#039;);
+app()-&gt;when(&#039;Apple&#039;)-&gt;needs(&#039;$color&#039;)-&gt;give(&#039;red&#039;);
+echo app(&#039;Fruit&#039;)-&gt;color();
 ```
 
 绑定接口到实例
 
 ```php
-$this->app->bind(
-    'App\Contracts\EventPusher',
-    'App\Services\RedisEventPusher'
+$this-&gt;app-&gt;bind(
+    &#039;App\Contracts\EventPusher&#039;,
+    &#039;App\Services\RedisEventPusher&#039;
 );
 ```
 
 根据上下文提供不同的绑定
 
 ```php
-$this->app->when(PhotoController::class)
-          ->needs(Filesystem::class)
-          ->give(function () {
-              return Storage::disk('local');
+$this-&gt;app-&gt;when(PhotoController::class)
+          -&gt;needs(Filesystem::class)
+          -&gt;give(function () {
+              return Storage::disk(&#039;local&#039;);
           });
 
-$this->app->when([VideoController::class, UploadController::class])
-          ->needs(Filesystem::class)
-          ->give(function () {
-              return Storage::disk('s3');
+$this-&gt;app-&gt;when([VideoController::class, UploadController::class])
+          -&gt;needs(Filesystem::class)
+          -&gt;give(function () {
+              return Storage::disk(&#039;s3&#039;);
           });
 ```
 
 给绑定设置标签
 
 ```php
-$this->app->bind('SpeedReport', function () {
+$this-&gt;app-&gt;bind(&#039;SpeedReport&#039;, function () {
     //
 });
 
-$this->app->bind('MemoryReport', function () {
+$this-&gt;app-&gt;bind(&#039;MemoryReport&#039;, function () {
     //
 });
 
-$this->app->tag(['SpeedReport', 'MemoryReport'], 'reports');
+$this-&gt;app-&gt;tag([&#039;SpeedReport&#039;, &#039;MemoryReport&#039;], &#039;reports&#039;);
 
-$this->app->bind('ReportAggregator', function ($app) {
-    return new ReportAggregator($app->tagged('reports'));
+$this-&gt;app-&gt;bind(&#039;ReportAggregator&#039;, function ($app) {
+    return new ReportAggregator($app-&gt;tagged(&#039;reports&#039;));
 });
 ```
 
 当 `Service` 已经被解析，`extend` 方法可以用来修改解析出来的实例 `$service`：
 
 ```php
-$this->app->extend(Service::class, function ($service, $app) {
+$this-&gt;app-&gt;extend(Service::class, function ($service, $app) {
     return new DecoratedService($service);
 });
 ```
@@ -135,27 +135,27 @@ $this->app->extend(Service::class, function ($service, $app) {
 ###### **拿药（解析）**
 
 ```php
-$this->app->make('HelpSpot\API');
-app()->make('HelpSpot\API');
-resolve('HelpSpot\API');
-app('HelpSpot\API');
-app()['HelpSpot\API']
-app()->get('HelpSpot\API')
+$this-&gt;app-&gt;make(&#039;HelpSpot\API&#039;);
+app()-&gt;make(&#039;HelpSpot\API&#039;);
+resolve(&#039;HelpSpot\API&#039;);
+app(&#039;HelpSpot\API&#039;);
+app()[&#039;HelpSpot\API&#039;]
+app()-&gt;get(&#039;HelpSpot\API&#039;)
 public function xxx(HelpSpot\API $users)
 ```
 
 ```php
 // 注入依赖
-$api = $this->app->makeWith('HelpSpot\API', ['id' => 1]);
-$api = app('HelpSpot\API', ['id' => 1]); 
-$api = resolve('HelpSpot\API', ['id' => 1]); 
+$api = $this-&gt;app-&gt;makeWith(&#039;HelpSpot\API&#039;, [&#039;id&#039; =&gt; 1]);
+$api = app(&#039;HelpSpot\API&#039;, [&#039;id&#039; =&gt; 1]); 
+$api = resolve(&#039;HelpSpot\API&#039;, [&#039;id&#039; =&gt; 1]); 
 ```
 
 ```php
 # laravel 实现了 PSR-11 接口，所以就可以用该接口的类型提示解析
 use Psr\Container\ContainerInterface;
-Route::get('/', function (ContainerInterface $container) {
-    $service = $container->get('Service');
+Route::get(&#039;/&#039;, function (ContainerInterface $container) {
+    $service = $container-&gt;get(&#039;Service&#039;);
     //
 });
 ```
@@ -166,7 +166,7 @@ Route::get('/', function (ContainerInterface $container) {
 容器解析任何对象时调用
 
 ```php
-$this->app->resolving(function ($object, $app) {
+$this-&gt;app-&gt;resolving(function ($object, $app) {
     
 });
 ```
@@ -174,7 +174,7 @@ $this->app->resolving(function ($object, $app) {
 容器解析 `HelpSpot\API` 时调用
 
 ```php
-$this->app->resolving(HelpSpot\API::class, function ($api, $app) {
+$this-&gt;app-&gt;resolving(HelpSpot\API::class, function ($api, $app) {
     
 });
 ```
@@ -195,8 +195,8 @@ class RiakServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public function register()
     {
-        $this->app->singleton(Connection::class, function ($app) {
-            return new Connection(config('riak'));
+        $this-&gt;app-&gt;singleton(Connection::class, function ($app) {
+            return new Connection(config(&#039;riak&#039;));
         });
     }
 
@@ -216,20 +216,20 @@ class RiakServiceProvider extends ServiceProvider implements DeferrableProvider
 方便测试（辅助函数和 facades 没什么区别，测试方法也是一样的）。
 
 ```php
-Route::get('/cache', function () {
-    return Cache::get('key');     // === return cache('key');
+Route::get(&#039;/cache&#039;, function () {
+    return Cache::get(&#039;key&#039;);     // === return cache(&#039;key&#039;);
 });
 ```
 
 ```php
 public function testBasicExample()
 {
-    Cache::shouldReceive('get')
-         ->with('key')
-         ->andReturn('value');
+    Cache::shouldReceive(&#039;get&#039;)
+         -&gt;with(&#039;key&#039;)
+         -&gt;andReturn(&#039;value&#039;);
 
-    $this->visit('/cache')
-         ->see('value');
+    $this-&gt;visit(&#039;/cache&#039;)
+         -&gt;see(&#039;value&#039;);
 }
 ```
 
@@ -242,8 +242,8 @@ public function testBasicExample()
 use App\Contracts\Publisher;
 public function publish(Publisher $publisher)
 {
-    $this->update(['publishing' => now()]);
-    $publisher->publish($this);
+    $this-&gt;update([&#039;publishing&#039; =&gt; now()]);
+    $publisher-&gt;publish($this);
 }
 ```
 
@@ -258,7 +258,7 @@ Publisher::publish($this);
 
 ```php
 use Facades\App\Contracts\Publisher;
-Publisher::shouldReceive('publish')->once()->with($podcast);
+Publisher::shouldReceive(&#039;publish&#039;)-&gt;once()-&gt;with($podcast);
 ```
 
 ###### **facades 列表**

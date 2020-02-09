@@ -12,20 +12,20 @@
 
 ```php
 // resources/views/test.blade.php
-return view('test');            
+return view(&#039;test&#039;);            
 
 // resources/views/parent/test.blade.php
-return view('parent.test');     
+return view(&#039;parent.test&#039;);     
 ```
 
 #### **2. 给视图传递数据**
 
 ```php
-return view('greetings', ['name' => 'Victoria']);
-return view('greeting')->with('name', 'Victoria');
+return view(&#039;greetings&#039;, [&#039;name&#039; =&gt; &#039;Victoria&#039;]);
+return view(&#039;greeting&#039;)-&gt;with(&#039;name&#039;, &#039;Victoria&#039;);
 
-return view('student', compact('names', 'ages'));
-// 相当于 return view('student', ['names' => $names, 'ages' => $ages]);
+return view(&#039;student&#039;, compact(&#039;names&#039;, &#039;ages&#039;));
+// 相当于 return view(&#039;student&#039;, [&#039;names&#039; =&gt; $names, &#039;ages&#039; =&gt; $ages]);
 ```
 
 #### **3. 模版语法**
@@ -34,7 +34,7 @@ return view('student', compact('names', 'ages'));
 
 ```php
 {{-- 浏览器查看源代码不会显示这条注释 --}}
-<!-- 浏览器查看源代码会显示这条注释 -->
+&lt;!-- 浏览器查看源代码会显示这条注释 --&gt;
 ```
 
 ###### **php 标签**
@@ -45,31 +45,31 @@ return view('student', compact('names', 'ages'));
 @endphp
     
 // 等同于
-<?php 
+&lt;?php 
 
-?>
+?&gt;
 ```
 
 ###### **表单伪造**
 
 ```html
-<form method="POST" action="/profile">
-    @method('PUT')     // put delete 模拟
-    @csrf              // method="POST" 必须加这行，防止跨站请求伪造
+&lt;form method=&quot;POST&quot; action=&quot;/profile&quot;&gt;
+    @method(&#039;PUT&#039;)     // put delete 模拟
+    @csrf              // method=&quot;POST&quot; 必须加这行，防止跨站请求伪造
     ...
-</form>    
+&lt;/form&gt;    
    
-<!-- 等同于 -->
-<form method="POST" action="/profile">
-    <input type="hidden" name="_token" value="zou4UiPPJQ6MmwKWL">     
-    <input type="hidden" name="_method" value="PUT">   
-</form>
+&lt;!-- 等同于 --&gt;
+&lt;form method=&quot;POST&quot; action=&quot;/profile&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;_token&quot; value=&quot;zou4UiPPJQ6MmwKWL&quot;&gt;     
+    &lt;input type=&quot;hidden&quot; name=&quot;_method&quot; value=&quot;PUT&quot;&gt;   
+&lt;/form&gt;
 ```
 
 ###### **输出变量**
 
 ```php
-{{ $name }} // 等同于 <?=htmlspecialchars($name)?> 避免 xss 攻击
+{{ $name }} // 等同于 &lt;?=htmlspecialchars($name)?&gt; 避免 xss 攻击
 
 {!! $name !!}  // 不带 htmlspecialchars
 
@@ -77,9 +77,9 @@ return view('student', compact('names', 'ages'));
 @{{ $name }}
 
 @verbatim
-    <div class="container">
+    &lt;div class=&quot;container&quot;&gt;
         Hello, {{ $name }}.
-    </div>
+    &lt;/div&gt;
 @endverbatim
 ```
 
@@ -88,99 +88,99 @@ return view('student', compact('names', 'ages'));
 ```php
 块两种定义方式：
     1. 使用 section
-        @section('def1')
+        @section(&#039;def1&#039;)
         @show
 
-        @section('def2')
+        @section(&#039;def2&#039;)
             一些内容
         @show
     
     2. 使用 yield
-    	@yield('def3')
+    	@yield(&#039;def3&#039;)
     
-    	@yield('def4', '一些内容')
+    	@yield(&#039;def4&#039;, &#039;一些内容&#039;)
     
 块的使用方式
-    @section('def2', "<p>def2</p>")   // def2的内容会 htmlspecialchars
+    @section(&#039;def2&#039;, &quot;&lt;p&gt;def2&lt;/p&gt;&quot;)   // def2的内容会 htmlspecialchars
     
-    @section('def1')
+    @section(&#039;def1&#039;)
         正在使用
     @endsection
 ```
 
 ```css
 // parent.blade.php
-@section('header')
-    <p>This is header.</p>
+@section(&#039;header&#039;)
+    &lt;p&gt;This is header.&lt;/p&gt;
 @show
 
-@yield('nav', '<p>I am nav.</p>')
+@yield(&#039;nav&#039;, &#039;&lt;p&gt;I am nav.&lt;/p&gt;&#039;)
 
-@yield('content')
+@yield(&#039;content&#039;)
 
-@section('footer')
-    <p>父 footer.</p>
+@section(&#039;footer&#039;)
+    &lt;p&gt;父 footer.&lt;/p&gt;
 @show
     
     
 // son.blade.php 继承 parent.blade.php
-@extends('extend.father')
+@extends(&#039;extend.father&#039;)
 
 
-@section('header', "<p>新的头部</p>")
+@section(&#039;header&#039;, &quot;&lt;p&gt;新的头部&lt;/p&gt;&quot;)
 
 
-@section('content')
-    <p>body 主体</p>
+@section(&#039;content&#039;)
+    &lt;p&gt;body 主体&lt;/p&gt;
 @endsection
 
 
-@section('footer')
+@section(&#039;footer&#039;)
     @parent
-    <p> 子 footer </p>
+    &lt;p&gt; 子 footer &lt;/p&gt;
 @endsection
 ```
 
 ###### **模版包含**
 
 ```php
-@include('shared.errors')
+@include(&#039;shared.errors&#039;)
 ```
 
 ###### **模版组件**
 
 ```php
-<!-- /resources/views/alert.blade.php -->
-<div class="alert alert-danger">
+&lt;!-- /resources/views/alert.blade.php --&gt;
+&lt;div class=&quot;alert alert-danger&quot;&gt;
     {{ $slot }}
-</div>
+&lt;/div&gt;
 
-@component('alert')
-    <strong>Whoops!</strong> Something went wrong!
+@component(&#039;alert&#039;)
+    &lt;strong&gt;Whoops!&lt;/strong&gt; Something went wrong!
 @endcomponent
 
     
-@componentFirst(['custom.alert', 'alert'])
-    <strong>Whoops!</strong> Something went wrong!
+@componentFirst([&#039;custom.alert&#039;, &#039;alert&#039;])
+    &lt;strong&gt;Whoops!&lt;/strong&gt; Something went wrong!
 @endcomponent
     
     
-<!-- /resources/views/alert.blade.php -->
+&lt;!-- /resources/views/alert.blade.php --&gt;
 
-<div class="alert alert-danger">
-    <div class="alert-title">{{ $title }}</div>
+&lt;div class=&quot;alert alert-danger&quot;&gt;
+    &lt;div class=&quot;alert-title&quot;&gt;{{ $title }}&lt;/div&gt;
     {{ $slot }}
-</div>
+&lt;/div&gt;
 
-@component('alert')
-    @slot('title')
+@component(&#039;alert&#039;)
+    @slot(&#039;title&#039;)
         Forbidden
     @endslot
     You are not allowed to access this resource!
 @endcomponent
 
    
-@component('alert', ['foo' => 'bar'])
+@component(&#039;alert&#039;, [&#039;foo&#039; =&gt; &#039;bar&#039;])
     ...
 @endcomponent
 ```
@@ -188,24 +188,24 @@ return view('student', compact('names', 'ages'));
 ###### **错误消息**
 
 ```php
-<input id="title" type="text" class="@error('title') is-invalid @enderror">
+&lt;input id=&quot;title&quot; type=&quot;text&quot; class=&quot;@error(&#039;title&#039;) is-invalid @enderror&quot;&gt;
 
-@error('title')
-    <div class="alert alert-danger">{{ $message }}</div>
+@error(&#039;title&#039;)
+    &lt;div class=&quot;alert alert-danger&quot;&gt;{{ $message }}&lt;/div&gt;
 @enderror    
 
-@error('email', 'login') is-invalid @enderror
+@error(&#039;email&#039;, &#039;login&#039;) is-invalid @enderror
 ```
 
 ###### **json**
 
 ```php
-<script>
-    var app = @json($array);  // <?php echo json_encode($array); ?>
+&lt;script&gt;
+    var app = @json($array);  // &lt;?php echo json_encode($array); ?&gt;
 
     var app = @json($array, JSON_PRETTY_PRINT);
-</script>
-<example-component :some-prop='@json($array)'></example-component>
+&lt;/script&gt;
+&lt;example-component :some-prop=&#039;@json($array)&#039;&gt;&lt;/example-component&gt;
 # 在元素属性中使用@json要求它用单引号括起来。
 ```
 
@@ -214,10 +214,10 @@ return view('student', compact('names', 'ages'));
 ```css
 @if (count($records) === 1)
     I have one record!
-@elseif (count($records) > 1)
+@elseif (count($records) &gt; 1)
     I have multiple records!
 @else
-    I don't have any records!
+    I don&#039;t have any records!
 @endif
 
 @unless (Auth::check())
@@ -229,7 +229,7 @@ return view('student', compact('names', 'ages'));
 @endisset
 
 @empty($records)
-    // $records is "empty"...
+    // $records is &quot;empty&quot;...
 @endempty
 
 @auth
@@ -240,11 +240,11 @@ return view('student', compact('names', 'ages'));
     // The user is not authenticated...
 @endguest
 
-@auth('admin')   // 自己写的 admin 认证方式
+@auth(&#039;admin&#039;)   // 自己写的 admin 认证方式
     // The user is authenticated...
 @endauth
 
-@guest('admin')
+@guest(&#039;admin&#039;)
     // The user is not authenticated...
 @endguest
 
@@ -261,59 +261,59 @@ return view('student', compact('names', 'ages'));
         Default case...
 @endswitch
 
-@for ($i = 0; $i < 10; $i++)
+@for ($i = 0; $i &lt; 10; $i++)
     The current value is {{ $i }}
 @endfor
 
 @foreach ($users as $user)
-    <p>This is user {{ $user->id }}</p>
+    &lt;p&gt;This is user {{ $user-&gt;id }}&lt;/p&gt;
 @endforeach
 
 @forelse ($users as $user)
-    <li>{{ $user->name }}</li>
+    &lt;li&gt;{{ $user-&gt;name }}&lt;/li&gt;
 @empty
-    <p>No users</p>
+    &lt;p&gt;No users&lt;/p&gt;
 @endforelse
 
 @while (true)
-    <p>I'm looping forever.</p>
+    &lt;p&gt;I&#039;m looping forever.&lt;/p&gt;
 @endwhile
 
 @foreach ($users as $user)
-    @if ($user->type == 1)
+    @if ($user-&gt;type == 1)
         @continue
     @endif
 
-    <li>{{ $user->name }}</li>
+    &lt;li&gt;{{ $user-&gt;name }}&lt;/li&gt;
     
-    @if ($user->number == 5)
+    @if ($user-&gt;number == 5)
         @break
     @endif
 @endforeach
 
 @foreach ($users as $user)
-    @continue($user->type == 1)
+    @continue($user-&gt;type == 1)
 
-    <li>{{ $user->name }}</li>
+    &lt;li&gt;{{ $user-&gt;name }}&lt;/li&gt;
     
-    @break($user->number == 5)
+    @break($user-&gt;number == 5)
 @endforeach
 
 @foreach ($users as $user)
-    @if ($loop->first)
+    @if ($loop-&gt;first)
         This is the first iteration.
     @endif
 
-    @if ($loop->last)
+    @if ($loop-&gt;last)
         This is the last iteration.
     @endif
     
-    <p>This is user {{ $user->id }}</p>
+    &lt;p&gt;This is user {{ $user-&gt;id }}&lt;/p&gt;
 @endforeach
 
 @foreach ($users as $user)
-    @foreach ($user->posts as $post)
-        @if ($loop->parent->first)
+    @foreach ($user-&gt;posts as $post)
+        @if ($loop-&gt;parent-&gt;first)
             This is first iteration of the parent loop.
         @endif
     @endforeach
@@ -338,14 +338,14 @@ $loop->parent|	嵌套循环中，父循环的循环变量
 #### **基础**
 
 ```php
-if (\View::exists('emails.customer')) 
-return view()->first(['custom.admin', 'admin'], $data);  
-return \View::first(['custom.admin', 'admin'], $data);   // 同上
+if (\View::exists(&#039;emails.customer&#039;)) 
+return view()-&gt;first([&#039;custom.admin&#039;, &#039;admin&#039;], $data);  
+return \View::first([&#039;custom.admin&#039;, &#039;admin&#039;], $data);   // 同上
 
 
 public function boot()
 {
-    View::share('key', 'value');  // class AppServiceProvider
+    View::share(&#039;key&#039;, &#039;value&#039;);  // class AppServiceProvider
     // 在所有视图中都可以使用 {{ $key }}
 }
 ```
@@ -359,10 +359,10 @@ public function boot()
 public function boot()
 {
     View::composer(
-        'profile', 'App\Http\ViewComposers\ProfileComposer'
+        &#039;profile&#039;, &#039;App\Http\ViewComposers\ProfileComposer&#039;
     );            // ProfileComposer@compose 在 profile 视图生成前调用
 
-    View::composer('dashboard', function ($view) {
+    View::composer(&#039;dashboard&#039;, function ($view) {
         //
     });
 }
@@ -372,7 +372,7 @@ class ProfileComposer
 {
     public function compose(View $view)
     {
-        $view->with('key', 'value');
+        $view-&gt;with(&#039;key&#039;, &#039;value&#039;);
     }
 }
 ```
@@ -380,13 +380,13 @@ class ProfileComposer
 ```php
 # 多个视图
 View::composer(
-    ['profile', 'dashboard'],
-    'App\Http\ViewComposers\MyViewComposer'
+    [&#039;profile&#039;, &#039;dashboard&#039;],
+    &#039;App\Http\ViewComposers\MyViewComposer&#039;
 );
 ```
 ```php
 # 所有
-View::composer('*', function ($view) {
+View::composer(&#039;*&#039;, function ($view) {
     //
 });
 ```
@@ -396,7 +396,7 @@ View::composer('*', function ($view) {
 ```php
 # 视图 creators 和视图合成器非常相似。唯一不同之处在于：视图构造器在视图实例化之后立即执行，而视图合成器在视图即将渲染时执行。
 # 简单的说，creator 在 composer 之前执行
-View::creator('profile', 'App\Http\ViewCreators\ProfileCreator');
+View::creator(&#039;profile&#039;, &#039;App\Http\ViewCreators\ProfileCreator&#039;);
 ```
 
 
@@ -412,54 +412,54 @@ public function boot()
 ```
 
 ```php
-@includeIf('view.name', ['some' => 'data'])
+@includeIf(&#039;view.name&#039;, [&#039;some&#039; =&gt; &#039;data&#039;])
 
-@includeWhen($boolean, 'view.name', ['some' => 'data'])
+@includeWhen($boolean, &#039;view.name&#039;, [&#039;some&#039; =&gt; &#039;data&#039;])
 
-@includeFirst(['custom.admin', 'admin'], ['some' => 'data'])
+@includeFirst([&#039;custom.admin&#039;, &#039;admin&#039;], [&#039;some&#039; =&gt; &#039;data&#039;])
 ```
 
 ```php
 # resources/views/includes/input.blade.php
-<input type="{{ $type ?? 'text' }}"> // isset($type) ? $type : 'text';
+&lt;input type=&quot;{{ $type ?? &#039;text&#039; }}&quot;&gt; // isset($type) ? $type : &#039;text&#039;;
     
 // AppServiceProvider 
-\Blade::include('includes.input', 'input');   // 别名
+\Blade::include(&#039;includes.input&#039;, &#039;input&#039;);   // 别名
 
-@input(['type' => 'email'])  
-// 等价于 @include('includes.input' ,['type' => 'email'])
+@input([&#039;type&#039; =&gt; &#039;email&#039;])  
+// 等价于 @include(&#039;includes.input&#039; ,[&#039;type&#039; =&gt; &#039;email&#039;])
 ```
 
 ```php
-@each('view.name', $jobs, 'job')
-@each('view.name', $jobs, 'job', 'view.empty')  // 数组是空，则渲染 view.empty
+@each(&#039;view.name&#039;, $jobs, &#039;job&#039;)
+@each(&#039;view.name&#039;, $jobs, &#039;job&#039;, &#039;view.empty&#039;)  // 数组是空，则渲染 view.empty
 ```
 
 ###### **堆栈**
 
 ```php
-<!-- common.blade.php -->
-@stack('scripts')
-@stack('scripts')
+&lt;!-- common.blade.php --&gt;
+@stack(&#039;scripts&#039;)
+@stack(&#039;scripts&#039;)
 ```
 ```php
-<!-- extend.blade.php -->
-@push('scripts')
-    <script src="/example.js"></script>
+&lt;!-- extend.blade.php --&gt;
+@push(&#039;scripts&#039;)
+    &lt;script src=&quot;/example.js&quot;&gt;&lt;/script&gt;
 @endpush
 
 /**  输出 start
-<script src="/example.js"></script>
-<script src="/example.js"></script>
+&lt;script src=&quot;/example.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/example.js&quot;&gt;&lt;/script&gt;
      输出 end  **/
 ```
 ```php
-@push('scripts')
+@push(&#039;scripts&#039;)
     显示为第二个
 @endpush
 
 
-@prepend('scripts')
+@prepend(&#039;scripts&#039;)
     显示为第一个
 @endprepend
 ```
@@ -467,28 +467,28 @@ public function boot()
 ###### **服务注入**
 
 ```php
-@inject('metrics', 'App\Services\MetricsService')
+@inject(&#039;metrics&#039;, &#039;App\Services\MetricsService&#039;)
 
-<div>
-    Monthly Revenue: {{ $metrics->monthlyRevenue() }}.
-        // (new App\Services\MetricsService())->monthlyRevenue()
-</div>
+&lt;div&gt;
+    Monthly Revenue: {{ $metrics-&gt;monthlyRevenue() }}.
+        // (new App\Services\MetricsService())-&gt;monthlyRevenue()
+&lt;/div&gt;
 ```
 
 ###### **拓展 Blade**
 
 ```php
 # class AppServiceProvider 中 boot 方法
-\Blade::directive('datetime', function ($expression) {
-	return "<?php echo ($expression)->format('m/d/Y H:i'); ?>";
+\Blade::directive(&#039;datetime&#039;, function ($expression) {
+	return &quot;&lt;?php echo ($expression)-&gt;format(&#039;m/d/Y H:i&#039;); ?&gt;&quot;;
 });
 ```
 
 > 更新`Blade`指令的逻辑之后，您需要删除所有缓存的`Blade`视图(`php artisan view:clear`)。 
 ```html
-<!-- some.blade.php -->
+&lt;!-- some.blade.php --&gt;
 @datetime($var)
-// <?php echo ($var)->format('m/d/Y H:i'); ?>
+// &lt;?php echo ($var)-&gt;format(&#039;m/d/Y H:i&#039;); ?&gt;
 ```
 
 ###### **自定义模版语法**
@@ -496,14 +496,14 @@ public function boot()
 ```php
 public function boot()
 {
-    \Blade::if('env', function ($environment) {
-        return app()->environment($environment);
+    \Blade::if(&#039;env&#039;, function ($environment) {
+        return app()-&gt;environment($environment);
     });
 }
 ```
 
 ```php
-@env('local')
+@env(&#039;local&#039;)
     // The application is in the local environment...
 @else
     // The application is not in the local environment...

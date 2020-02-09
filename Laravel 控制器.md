@@ -7,11 +7,11 @@
 ###### **如果你的控制器只有一个方法，可以这么玩儿：**
 
 ```php
-// Route::get('user/{id}', 'ShowProfile');
+// Route::get(&#039;user/{id}&#039;, &#039;ShowProfile&#039;);
 // php artisan make:controller ShowProfile --invokable
 public function __invoke($id)
 {
-     return view('user.profile', ['user' => User::findOrFail($id)]);
+     return view(&#039;user.profile&#039;, [&#039;user&#039; =&gt; User::findOrFail($id)]);
 }
 ```
 
@@ -24,10 +24,10 @@ public function __invoke($id)
 控制器的中间件
 
 ```php
-$this->middleware('auth');
-$this->middleware('auth')->only('index');
-$this->middleware('auth')->except('store');
-$this->middleware(function ($request, $next) {
+$this-&gt;middleware(&#039;auth&#039;);
+$this-&gt;middleware(&#039;auth&#039;)-&gt;only(&#039;index&#039;);
+$this-&gt;middleware(&#039;auth&#039;)-&gt;except(&#039;store&#039;);
+$this-&gt;middleware(function ($request, $next) {
        return $next($request);
 });
 ```
@@ -38,29 +38,29 @@ $this->middleware(function ($request, $next) {
 php artisan make:controller PhotoController --resource
 php artisan make:controller PhotoController --resource --model=Photo
 
-Route::resource('photos', 'PhotoController');
-Route::apiResource('photos', 'PhotoController');    // 没有 create 和 edit
+Route::resource(&#039;photos&#039;, &#039;PhotoController&#039;);
+Route::apiResource(&#039;photos&#039;, &#039;PhotoController&#039;);    // 没有 create 和 edit
 
 Route::resources([
-    'photos' => 'PhotoController',
-    'posts' => 'PostController'
+    &#039;photos&#039; =&gt; &#039;PhotoController&#039;,
+    &#039;posts&#039; =&gt; &#039;PostController&#039;
 ]);
 
 Route::apiResources([
-    'photos' => 'PhotoController',
-    'posts' => 'PostController'
+    &#039;photos&#039; =&gt; &#039;PhotoController&#039;,
+    &#039;posts&#039; =&gt; &#039;PostController&#039;
 ]);
 
-Route::resource('photos', 'PhotoController')->names([
-    'create' => 'photos.build'
+Route::resource(&#039;photos&#039;, &#039;PhotoController&#039;)-&gt;names([
+    &#039;create&#039; =&gt; &#039;photos.build&#039;
 ]);  // 重命名路由名称
 
 
-Route::resource('photo', 'PhotoController', ['only' => [
-    'index', 'show'
+Route::resource(&#039;photo&#039;, &#039;PhotoController&#039;, [&#039;only&#039; =&gt; [
+    &#039;index&#039;, &#039;show&#039;
 ]]);
-Route::resource('photo', 'PhotoController', ['except' => [
-    'create', 'store', 'update', 'destroy'
+Route::resource(&#039;photo&#039;, &#039;PhotoController&#039;, [&#039;except&#039; =&gt; [
+    &#039;create&#039;, &#039;store&#039;, &#039;update&#039;, &#039;destroy&#039;
 ]]);
 ```
 
@@ -80,8 +80,8 @@ Route::resource('photo', 'PhotoController', ['except' => [
 默认情况下，`Route::resource` 会根据资源名称的「单数」形式创建资源路由的路由参数。你可以在选项数组中传入 `parameters` 参数来轻松地覆盖每个资源。`parameters` 数组应该是资源名称和参数名称的关联数组：
 
 ```php
-Route::resource('user', 'PhotoController', ['parameters' => [
-    'photo' => 'photo_in_phone'
+Route::resource(&#039;user&#039;, &#039;PhotoController&#039;, [&#039;parameters&#039; =&gt; [
+    &#039;photo&#039; =&gt; &#039;photo_in_phone&#039;
 ]]);
 # /user/{photo_in_phone}
 ```
@@ -91,8 +91,8 @@ Route::resource('user', 'PhotoController', ['parameters' => [
 ```php
 // AppServiceProvider
 Route::resourceVerbs([
-    'create' => 'crear',
-    'edit' => 'editar',
+    &#039;create&#039; =&gt; &#039;crear&#039;,
+    &#039;edit&#039; =&gt; &#039;editar&#039;,
 ]);
 ```
 
@@ -103,11 +103,11 @@ Route::resourceVerbs([
 ###### **参数必须在依赖注入之后传入**
 
 ```php
-# Route::put('user/{id}', 'UserController@update');
+# Route::put(&#039;user/{id}&#039;, &#039;UserController@update&#039;);
 public function update(Request $request, $id)
 {
     // 上面的 Request $request 相当于： $request = new Resquest();
-    $url = $request->url();
+    $url = $request-&gt;url();
     //
 }
 ```

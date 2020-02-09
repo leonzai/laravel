@@ -27,15 +27,15 @@
 ###### **一个简单的例子**
 
 ```php
-<?php
+&lt;?php
 	
 // 路由文件：routes/web.php
 
-Route::get('/students', 'StudentController@index');
+Route::get(&#039;/students&#039;, &#039;StudentController@index&#039;);
 ```
 
 ```php
-<?php
+&lt;?php
 	
 // 控制器文件：app/Http/Controllers/StudentController.php
 
@@ -48,13 +48,13 @@ class StudentController extends Controller
 	public function index()
 	{
 		$students = Student::all();
-		return view('students.index', compact('students'));
+		return view(&#039;students.index&#039;, compact(&#039;students&#039;));
 	}
 }
 ```
 
 ```php
-<?php
+&lt;?php
 	
 // 模型文件：app/Student.php
 	
@@ -72,6 +72,6 @@ class Student extends Model
 // 视图文件：resources/views/students/index.blade.php
 
 @foreach($students as $student)
-	<p>{{ $student->name }}</p>
+	&lt;p&gt;{{ $student-&gt;name }}&lt;/p&gt;
 @endforeach
 ```
